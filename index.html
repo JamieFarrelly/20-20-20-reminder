@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>20-20-20 Rule</title>
+</head>
+
+<body>
+    <p>Once you have this page open, every 20 minutes you'll get a notification to remember the <a href="http://www.anthro.com/blog/2013/10/how-to-prevent-eye-strain-with-the-20-20-20-rule" target="_blank">20-20-20 rule</a>.</p>
+	
+    <script>
+        function remindMe() {
+
+            var message = "Remember the 20-20-20 rule!";
+            // check if the browser supports notifications
+            if (!("Notification" in window)) {
+                alert("This browser does not support desktop notifications");
+            }
+
+            // check whether notification permissions have already been granted
+            else if (Notification.permission === "granted") {
+                // it's okay to create a notification
+                var notification = new Notification(message);
+            }
+
+            // otherwise, we need to ask the user for permission
+            else if (Notification.permission !== "denied") {
+                Notification.requestPermission(function(permission) {
+
+                    // If the user accepts, let's create a notification
+                    if (permission === "granted") {
+                        var notification = new Notification(message);
+                    }
+                });
+            }
+
+            // if the user has denied notifications, do nothing
+        }
+
+        setInterval(function() {
+
+            remindMe();
+        }, 60 * 1000 * 20); // every 20 minutes
+    </script>
+</body>
+
+</html>
